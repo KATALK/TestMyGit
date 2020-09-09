@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户修改</title>
+</head>
+<body>
+<form th:action="@{'/user/update/'+${user.id}}" method="post" style="text-align: center" >
+    <!--需要区分是员工数据-->
+    <!--
+        1.springMVC中配置了HiddenHttpMethodFilter;(SpringBoot自动配置好的)
+        2.页面创建一个post表单
+        3.创建一个input项，name="_method";值就是我们指定的请求方式。
+    -->
+    <input type="hidden" name="_method" th:value="put" th:if="${user!=null}" />
+    <input type="hidden" name="id" th:value="${user.id}" th:if="${user!=null}" >
+
+    <div class="form‐group">
+        <label>ID:</label>
+        <span th:text="${user.id}">id</span>
+    </div>
+    <div class="form‐group">
+        <label>NAME&nbsp;&nbsp;&nbsp;:</label>
+        <input name="name" type="text" class="form-control" placeholder="姓名" th:value="${user!=null}?${user.name}">
+    </div>
+    <div class="form‐group">
+        <label>USERNAME:</label>
+        <input name="username" type="text" class="form-control" placeholder="用户名" th:value="${user!=null}?${user.username}">
+    </div>
+    <div class="form‐group">
+        <label>PASSWORD:</label>
+        <input name="password" type="password" class="form-control" placeholder="密码" th:value="${user!=null}?${user.password}">
+    </div>
+    <button type="submit" class="btn btn-primary">添加</button>
+</form>
+</body>
+</html>

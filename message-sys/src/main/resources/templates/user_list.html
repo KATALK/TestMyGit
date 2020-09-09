@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        table {border-collapse: collapse; font-size: 14px; width: 80%; margin: auto}
+        table, th, td {border: 1px solid darkslategray;padding: 10px}
+        a{
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center">
+    <span style="color: darkslategray; font-size: 30px">后台管理系统</span>
+    <hr/>
+   <span style="color: deeppink">管理员 admin:</span>
+    <a th:href="@{'/user/logout'}">
+        <i class="fa fa-sign-out fa-fw"></i>退出登录
+    </a>
+    <table class="list">
+        <tr>
+            <th>id</th>
+            <th>姓名</th>
+            <th>用户名</th>
+            <th><a th:href="@{'/user/getAllUser'}" style="color: hotpink">返回首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a th:href="@{'/user/toAddUser'}" style="color: palegreen">添加用户</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="color: deeppink" th:text="${'当前页用户 :'+page.getContent().size()+'位'}">size</span></th>
+        </tr>
+        <tr th:each="user : ${page.content}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.name}">张三</td>
+            <td th:text="${user.username}">张三</td>
+            <td>
+                <a th:href="@{'/user/select/'+${user.id}}"
+                   class="btn btn-primary btn-sm waves-effect waves-light m-b-5" style="color: deeppink">
+                    <i class="fa fa-edit"></i> <span>编辑</span></a>
+                <a th:href="@{'/user/deleteUser/'+${user.id}}"
+                   class="btn btn-danger btn-sm waves-effect waves-light m-b-5" style="color: deeppink">
+                    <i class="fa fa-trash-o"></i> <span>删除</span></a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="text-align:center;">
+    <a th:href="@{/user/getAllUser(start=0)}">[首页]</a>
+    <a th:if="${not page.isFirst()}" th:href="@{/user/getAllUser(start=${page.number-1})}">[上页]</a>
+    <a th:if="${not page.isLast()}" th:href="@{/user/getAllUser(start=${page.number+1})}">[下页]</a>
+    <a th:href="@{/user/getAllUser(start=${page.totalPages-1})}">[末页]</a>
+</div>
+</body>
+</html>
